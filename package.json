@@ -4,7 +4,10 @@
 	"description": "A JavaScript router",
 	"main": "./dist/index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "webpack --mode=production --node-env=production",
+		"build:dev": "webpack --mode=development",
+		"watch": "webpack --watch"
 	},
 	"repository": {
 		"type": "git",
@@ -16,5 +19,12 @@
 		"url": "https://github.com/grand-sage-inextremis/Hermes/issues"
 	},
 	"homepage": "https://github.com/grand-sage-inextremis/Hermes#readme",
-	"type": "module"
+	"type": "module",
+	"devDependencies": {
+		"dotenv": "^16.5.0",
+		"ts-loader": "^9.5.2",
+		"typescript": "^5.8.3",
+		"webpack": "^5.99.5",
+		"webpack-cli": "^6.0.1"
+	}
 }
