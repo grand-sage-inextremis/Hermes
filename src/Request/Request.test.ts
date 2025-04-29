@@ -1,0 +1,647 @@
+import { describe, it, expect } from 'vitest';
+
+import Hms_Request from './Request';
+import { INVALID_URL } from '../utils/Error';
+
+
+
+/**
+ * Checks that the properties of a request have the expected values.
+ * @param givenRequest The request to be tested.
+ * @param expectedRequest An object whose properties have the expected values.
+ */
+function testRequest(requestTest : {expect: Hms_Request, toBe: Omit<Hms_Request, 'updateRelativePathname'>}): void
+{
+	const givenRequest = requestTest.expect;
+	const expectedRequest = requestTest.toBe;
+
+	expect(givenRequest.url.href).toBe(expectedRequest.url.href);
+	expect(givenRequest.pathnameBase).toBe(expectedRequest.pathnameBase);
+	expect(givenRequest.relativePathname).toBe(expectedRequest.relativePathname);
+}
+
+
+
+/**
+ * Checks that the properties of somes requests have the expected values.
+ * 
+ * Use this function if the properties of all the requests should have the same values.
+ * 
+ * @param givenRiquests The requests to be tested.
+ * @param expectedRequest An object whose properties have the expected values.
+ */
+function testRequests(requestsTest: {expect: Array<Hms_Request>, toBe: Omit<Hms_Request, 'updateRelativePathname'>}): void
+{
+	const givenRequests = requestsTest.expect;
+	const expectedRequest = requestsTest.toBe;
+
+	for (const givenRequest of givenRequests)
+	{
+		testRequest({
+			expect: givenRequest,
+			toBe: expectedRequest
+		});
+	}
+}
+
+
+
+describe("`Hms_Request` class", function ()
+{
+
+
+
+describe("Hms_Request.create(url: string)", function ()
+{
+	it("throws an error if `url` is an empty string", function ()
+	{
+		const generateGivenRequest = () => Hms_Request.create('');
+		const expectedError = INVALID_URL('');
+
+		expect(generateGivenRequest).toThrow(expectedError);
+	});
+
+
+
+	it("throws an error if `url` is an invalid URL", function ()
+	{
+		const generateGivenRequest = () => Hms_Request.create('media-inextremis.net');
+		const expectedError = INVALID_URL('media-inextremis.net');
+
+		expect(generateGivenRequest).toThrow(expectedError);
+	});
+
+
+
+	it("returns the correct URL if the `url`'s pathname is the root", function ()
+	{
+		testRequests({
+			expect: [
+				Hms_Request.create('http://media-inextremis.net'),
+				Hms_Request.create('http://media-inextremis.net/')
+			],
+			toBe: {
+				url: new URL('http://media-inextremis.net/'),
+				pathnameBase: '/',
+				relativePathname: '/'
+			}
+		});
+	});
+
+
+
+	it("returns the correct URL if `url` contains any pathname", function ()
+	{
+		testRequests({
+			expect: [
+				Hms_Request.create('http://media-inextremis.net/projects/hermes'),
+				Hms_Request.create('http://media-inextremis.net/projects/hermes/')
+			],
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes'
+			}
+		});
+	});
+
+
+
+	it("returns the correct URL if `url` contains a query string and a hash", function ()
+	{
+		testRequests({
+			expect: [
+				Hms_Request.create('http://media-inextremis.net/projects/hermes?query1=value1&query2=value2#fragment'),
+				Hms_Request.create('http://media-inextremis.net/projects/hermes/?query1=value1&query2=value2#fragment')
+			],
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes?query1=value1&query2=value2#fragment'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes'
+			}
+		});
+	});
+});
+
+
+
+describe("Hms_Request.create(url: URL)", function ()
+{
+	it("returns the correct URL if the `url`'s pathname is the root", function ()
+	{
+		testRequests({
+			expect: [
+				Hms_Request.create(new URL('http://media-inextremis.net')),
+				Hms_Request.create(new URL('http://media-inextremis.net/'))
+			],
+			toBe: {
+				url: new URL('http://media-inextremis.net/'),
+				pathnameBase: '/',
+				relativePathname: '/'
+			}
+		});
+	});
+
+
+
+	it("returns the correct URL if `url` contains any pathname", function ()
+	{
+		testRequests({
+			expect: [
+				Hms_Request.create(new URL('http://media-inextremis.net/projects/hermes')),
+				Hms_Request.create(new URL('http://media-inextremis.net/projects/hermes/'))
+			],
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes'
+			}
+		});
+	});
+
+
+
+	it("returns the correct URL if `url` contains a query string and a hash", function ()
+	{
+		testRequests({
+			expect: [
+				Hms_Request.create(new URL('http://media-inextremis.net/projects/hermes?query1=value1&query2=value2#fragment')),
+				Hms_Request.create(new URL('http://media-inextremis.net/projects/hermes/?query1=value1&query2=value2#fragment'))
+			],
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes?query1=value1&query2=value2#fragment'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes'
+			}
+		});
+	});
+});
+
+
+
+describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function ()
+{
+	it("just returns an empty string if no element of `pathnameList` matches the beginning of `this.relativePathname`", function ()
+	{
+		let chosenPathname: string;
+		
+		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/',							// Slash
+			'',								// Empty string
+			'/other',						// Different pathname
+			'/projects/other',				// Different pathname
+			'/projects/hermes/other',		// Different pathname
+			'projects',						// No leading slash
+			'/project',						// Too short, should be "/projects"
+			'/projects/herme',				// Too short, should be "/projects/hermes"
+			'/projects/hermes/docs/page1',	// Too long, should be "/projects/hermes/docs"
+		]);
+
+		expect(chosenPathname).toBe('');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+	});
+
+
+
+	it("correctly updates `this.relativePathname` and `this.pathnameBase` and returns the most specific element of\n\t `pathnameList` that has matched the beginning of `this.relativePathname`", function ()
+	{
+		let chosenPathname: string;
+		
+		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/projects',
+			'/projects/hermes',
+			'/projects/hermes/docs',
+			'/',							// Slash
+			'',								// Empty string
+			'/other',						// Different pathname
+			'/projects/other',				// Different pathname
+			'/projects/hermes/other',		// Different pathname
+			'projects',						// No leading slash
+			'/project',						// Too short, should be "/projects"
+			'/projects/herme',				// Too short, should be "/projects/hermes"
+			'/projects/hermes/docs/page1',	// Too long, should be "/projects/hermes/docs"
+		]);
+
+		expect(chosenPathname).toBe('/projects/hermes/docs');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes/docs',
+				relativePathname: '/'
+			}
+		});
+	});
+
+
+
+	it("does not return \"/\" if `this.relativePathname` is not \"/\" but there is \"/\" in `pathnameList`", function ()
+	{
+		let chosenPathname: string;
+		
+		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/'
+		]);
+
+		expect(chosenPathname).not.toBe('/');
+
+		
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/projects',
+			'/'
+		]);
+
+		expect(chosenPathname).not.toBe('/');
+	});
+
+
+
+	it("just returns an empty string if `this.relativePathname` is \"/\" but there is not \"/\" in `pathnameList`", function ()
+	{
+		let chosenPathname: string;
+		
+		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		
+		
+		chosenPathname = givenRequest.updateRelativePathname(['/projects/hermes/docs']);
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes/docs',
+				relativePathname: '/'
+			}
+		});
+
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/hermes',
+			'/hades1',
+			'/other'
+		]);
+
+		expect(chosenPathname).toBe('');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes/docs',
+				relativePathname: '/'
+			}
+		});
+	});
+
+
+
+	it("returns \"/\" without modifying `this.relativePathname` or `this.pathnameBase` if `this.relativePathname` is \"/\"\n\t and there is \"/\" in `pathnameList`", function ()
+	{
+		let chosenPathname: string;
+		
+		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		
+		
+		chosenPathname = givenRequest.updateRelativePathname(['/projects/hermes/docs']);
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes/docs',
+				relativePathname: '/'
+			}
+		});
+
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/',
+			'/hermes',
+			'/hades1',
+			'/other'
+		]);
+
+		expect(chosenPathname).toBe('/');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes/docs',
+				relativePathname: '/'
+			}
+		});
+	});
+
+
+
+	it("always updates `this.relativePathname` and `this.pathnameBase` correctly and returns the element of\n\t `pathnameList` that has matched the beginning of `this.relativePathname`, regardless of its index", function ()
+	{
+		let givenRequest: Hms_Request;
+		let chosenPathname: string;
+
+		
+		givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/projects',
+			'/',							// Slash
+			'',								// Empty string
+			'/other',						// Different pathname
+			'/projects/other',				// Different pathname
+			'/projects/hermes/other',		// Different pathname
+			'projects',						// No leading slash
+			'/project',						// Too short, should be "/projects"
+			'/projects/herme',				// Too short, should be "/projects/hermes"
+			'/projects/hermes/docs/page1',	// Too long, should be "/projects/hermes/docs"
+		]);
+
+		expect(chosenPathname).toBe('/projects');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects',
+				relativePathname: '/hermes/docs'
+			}
+		});
+
+		
+		givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/',							// Slash
+			'',								// Empty string
+			'/other',						// Different pathname
+			'/projects/other',				// Different pathname
+			'/projects/hermes/other',		// Different pathname
+			'/projects',
+			'projects',						// No leading slash
+			'/project',						// Too short, should be "/projects"
+			'/projects/herme',				// Too short, should be "/projects/hermes"
+			'/projects/hermes/docs/page1',	// Too long, should be "/projects/hermes/docs"
+		]);
+
+		expect(chosenPathname).toBe('/projects');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects',
+				relativePathname: '/hermes/docs'
+			}
+		});
+
+		
+		givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/',							// Slash
+			'',								// Empty string
+			'/other',						// Different pathname
+			'/projects/other',				// Different pathname
+			'/projects/hermes/other',		// Different pathname
+			'projects',						// No leading slash
+			'/project',						// Too short, should be "/projects"
+			'/projects/herme',				// Too short, should be "/projects/hermes"
+			'/projects/hermes/docs/page1',	// Too long, should be "/projects/hermes/docs"
+			'/projects',
+		]);
+
+		expect(chosenPathname).toBe('/projects');
+		
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects',
+				relativePathname: '/hermes/docs'
+			}
+		});
+	});
+
+
+
+	it("always updates `this.relativePathname` and `this.pathnameBase` correctly and returns the element of\n\t `pathnameList` that has matched the beginning of `this.relativePathname`, when this method is called multiple\n\t times successively", function ()
+	{
+		let chosenPathname: string;
+
+		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/projects',
+			'/',							// Slash
+			'',								// Empty string
+			'/other',						// Different pathname
+			'/projects/other',				// Different pathname
+			'/projects/hermes/other',		// Different pathname
+			'projects',						// No leading slash
+			'/project',						// Too short, should be "/projects"
+			'/projects/herme',				// Too short, should be "/projects/hermes"
+			'/projects/hermes/docs/page1',	// Too long, should be "/projects/hermes/docs"
+		]);
+
+		expect(chosenPathname).toBe('/projects');
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects',
+				relativePathname: '/hermes/docs'
+			}
+		});
+		
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/hermes',
+			'/',					// Slash
+			'',						// Empty string
+			'/other',				// Different pathname
+			'/hermes/other',		// Different pathname
+			'hermes',				// No leading slash
+			'/herme',				// Too short, should be "/hermes"
+			'/hermes/doc',			// Too short, should be "/hermes/docs"
+			'/hermes/docs/page1'	// Too long, should be "/hermes/docs"
+		]);
+
+		expect(chosenPathname).toBe('/hermes');
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes',
+				relativePathname: '/docs'
+			}
+		});
+		
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/docs',
+			'/',			// Slash
+			'',				// Empty string
+			'/other',		// Different pathname
+			'docs',			// No leading slash
+			'/doc',			// Too short, should be "/hermes"
+			'/docs/page1'	// Too long, should be "/docs"
+		]);
+
+		expect(chosenPathname).toBe('/docs');
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes/docs',
+				relativePathname: '/'
+			}
+		});
+		
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/',		// Slash
+			'',			// Empty string
+			'/page1'	// Too long, should be "/"
+		]);
+
+		expect(chosenPathname).toBe('/');
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes/docs',
+				relativePathname: '/'
+			}
+		});
+		
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'',			// Empty string
+			'/page1'	// Too long, should be "/"
+		]);
+
+		expect(chosenPathname).toBe('');
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes/docs',
+				relativePathname: '/'
+			}
+		});
+		
+
+		chosenPathname = givenRequest.updateRelativePathname([
+			'/page1'	// Too long, should be "/"
+		]);
+
+		expect(chosenPathname).toBe('');
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/projects/hermes/docs',
+				relativePathname: '/'
+			}
+		});
+	});
+});
+
+
+
+});  // ends describe('`Request` class', ... );
