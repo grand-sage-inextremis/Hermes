@@ -6,7 +6,14 @@ import Hms_Response from '../Response/Response';
 
 const Hms_Controller: Hms_ControllerClass = class Hms_Controller implements Hms_ControllerInstance
 {
-	constructor(controllerFunction: (req: Hms_Request, res: Hms_Response) => unknown) { }
+	private _controllerFunction: (req: Hms_Request, res: Hms_Response) => unknown;
+	
+	
+	
+	constructor(controllerFunction: (req: Hms_Request, res: Hms_Response) => unknown)
+	{
+		this._controllerFunction = controllerFunction;
+	}
 
 
 
@@ -19,6 +26,7 @@ const Hms_Controller: Hms_ControllerClass = class Hms_Controller implements Hms_
 
 	public run(req: Hms_Request, res: Hms_Response): this
 	{
+		this._controllerFunction(req, res);
 		return this;
 	}
 }
