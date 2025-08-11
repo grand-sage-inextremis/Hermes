@@ -4,7 +4,7 @@
 	"description": "A JavaScript router",
 	"main": "./dist/index.js",
 	"scripts": {
-		"test": "vitest",
+		"test": "(ENV=test tsup && vitest) ; rm -r ./build-test/",
 		"build": "ENV=production tsup",
 		"build:dev": "ENV=development tsup"
 	},

@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { defineConfig } from 'tsup';
+import { defineConfig, Options } from 'tsup';
 
 
 
@@ -7,8 +7,7 @@ const ENV: string = process.env.ENV ?? 'production'
 
 
 
-export default defineConfig(
-{
+const TSUP_CONFIG: Options = {
 	entry: ['./src/index.ts'],
 	outDir: './dist',
 	format: ['cjs', 'esm'],
@@ -16,5 +15,23 @@ export default defineConfig(
 	splitting: true,
 	sourcemap: true,
 	clean: true,
-	minify: ENV === 'development' ? false : true,
-});
+	minify: true
+};
+
+
+
+if (ENV === 'development')
+{
+	TSUP_CONFIG.minify = false;
+}
+
+
+if (ENV === 'test')
+{
+	TSUP_CONFIG.entry = ['./src/index.test.ts'];
+	TSUP_CONFIG.outDir = './build-test';
+}
+
+
+
+export default defineConfig(TSUP_CONFIG);
