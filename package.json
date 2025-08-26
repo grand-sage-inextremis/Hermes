@@ -25,7 +25,7 @@
 		"url": "git+https://github.com/grand-sage-inextremis/Hermes.git"
 	},
 	"author": "Grand Sage InExtremis <grand.sage.inextremis@gmail.com>",
-	"license": "Apache-2.0",
+	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/grand-sage-inextremis/Hermes/issues"
 	},
