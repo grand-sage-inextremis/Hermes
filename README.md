@@ -6,7 +6,7 @@ Hermes is a JavaScript router.
 
 <br>
 
-**Last release**: 1.0.0 &nbsp;*(2025-08-26)*
+**Last release**: 0.1.0 &nbsp;*(2025-08-26)*
 
 **License**: [MIT](./LICENSE) &nbsp;*(<https://opensource.org/license/mit>)*
 
