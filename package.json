@@ -12,7 +12,7 @@
 			"types": "./dist/index.d.ts"
 		}
 	},
-	"file": [
+	"files": [
 		"./dist/"
 	],
 	"scripts": {
