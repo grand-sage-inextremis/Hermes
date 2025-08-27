@@ -13,7 +13,11 @@
 		}
 	},
 	"files": [
-		"./dist/"
+		"./dist/",
+		"./package.json",
+		"./README.md",
+		"./CHANGELOG.md",
+		"./LICENSE"
 	],
 	"scripts": {
 		"test": "(ENV=test tsup && vitest) ; rm -r ./build-test/",
