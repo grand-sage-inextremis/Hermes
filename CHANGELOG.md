@@ -12,7 +12,7 @@ This project follows the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-f
 
 
 
-## [0.1.0] - 2025-08-26
+## [0.1.0] - 2025-08-27
 
 ### Added
 
