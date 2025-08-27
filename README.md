@@ -1,6 +1,6 @@
 # Hermes
 
-![Last version](https://img.shields.io/badge/Last_release-1.0.0-4466aa) ![MIT](https://img.shields.io/badge/License-MIT-3da639)
+![Last version](https://img.shields.io/badge/Last_release-0.1.0-4466aa) ![MIT](https://img.shields.io/badge/License-MIT-3da639)
 
 Hermes is a JavaScript router.
 
