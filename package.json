@@ -2,6 +2,9 @@
 	"name": "@inextremis/hermes",
 	"version": "0.1.0",
 	"description": "A JavaScript router",
+	"author": "Grand Sage InExtremis <grand.sage.inextremis@gmail.com>",
+	"license": "MIT",
+	"type": "module",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -24,17 +27,14 @@
 		"build": "ENV=production tsup",
 		"build:dev": "ENV=development tsup"
 	},
+	"homepage": "https://github.com/grand-sage-inextremis/Hermes#readme",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/grand-sage-inextremis/Hermes.git"
 	},
-	"author": "Grand Sage InExtremis <grand.sage.inextremis@gmail.com>",
-	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/grand-sage-inextremis/Hermes/issues"
 	},
-	"homepage": "https://github.com/grand-sage-inextremis/Hermes#readme",
-	"type": "module",
 	"devDependencies": {
 		"@swc/core": "^1.13.3",
 		"@types/node": "^24.2.0",
