@@ -13,7 +13,7 @@ const TSUP_CONFIG: Options = {
 	format: ['cjs', 'esm'],
 	target: "es2022",
 	dts: true,
-	splitting: true,
+	splitting: false,
 	sourcemap: true,
 	clean: true,
 	minify: true
