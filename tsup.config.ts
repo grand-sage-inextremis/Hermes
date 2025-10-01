@@ -14,7 +14,7 @@ const TSUP_CONFIG: Options = {
 	target: "es2022",
 	dts: true,
 	splitting: false,
-	sourcemap: true,
+	sourcemap: false,
 	clean: true,
 	minify: true
 };
@@ -24,6 +24,7 @@ const TSUP_CONFIG: Options = {
 if (ENV === 'development')
 {
 	TSUP_CONFIG.minify = false;
+	TSUP_CONFIG.sourcemap = true;
 }
 
 
