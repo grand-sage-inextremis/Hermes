@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
-import Hms_Request from './Request';
-import { INVALID_URL } from '../utils/Error';
+import Hms_Request from './Request.js';
+import { INVALID_URL } from '../utils/Error.js';
 
 
 

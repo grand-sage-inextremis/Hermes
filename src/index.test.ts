@@ -7,13 +7,13 @@ import {
 	Hms_ControllerLike as public_Hms_ControllerLike,
 	Hms_Controller as public_Hms_Controller,
 	Hms_Router as public_Hms_Router
-} from './index';
+} from './index.js';
 
-import Hms_Request from './Request/Request';
-import Hms_Response from './Response/Response';
-import { Hms_ControllerLike } from './Controller/ControllerLike';
-import Hms_Controller from './Controller/Controller';
-import Hms_Router from './Router/Router';
+import Hms_Request from './Request/Request.js';
+import Hms_Response from './Response/Response.js';
+import { Hms_ControllerLike } from './Controller/ControllerLike.js';
+import Hms_Controller from './Controller/Controller.js';
+import Hms_Router from './Router/Router.js';
 
 
 

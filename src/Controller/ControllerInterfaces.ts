@@ -1,6 +1,6 @@
-import { Hms_ControllerLike } from './ControllerLike';
-import Hms_Request from '../Request/Request';
-import Hms_Response from '../Response/Response';
+import { Hms_ControllerLike } from './ControllerLike.js';
+import Hms_Request from '../Request/Request.js';
+import Hms_Response from '../Response/Response.js';
 
 
 

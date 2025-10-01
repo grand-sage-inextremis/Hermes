@@ -1,6 +1,6 @@
-import { Hms_ControllerInstance, Hms_ControllerClass } from './ControllerInterfaces';
-import Hms_Request from '../Request/Request';
-import Hms_Response from '../Response/Response';
+import { Hms_ControllerInstance, Hms_ControllerClass } from './ControllerInterfaces.js';
+import Hms_Request from '../Request/Request.js';
+import Hms_Response from '../Response/Response.js';
 
 
 

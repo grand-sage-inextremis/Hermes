@@ -5,6 +5,9 @@
 	"author": "Grand Sage InExtremis <grand.sage.inextremis@gmail.com>",
 	"license": "MIT",
 	"type": "module",
+	"engines": {
+		"node": ">=18.12.1"
+	},
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -37,7 +40,6 @@
 		"url": "https://github.com/grand-sage-inextremis/Hermes/issues"
 	},
 	"devDependencies": {
-		"@swc/core": "^1.13.3",
 		"@types/node": "^24.2.0",
 		"cross-env": "^10.1.0",
 		"dotenv": "^16.5.0",

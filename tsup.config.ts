@@ -11,6 +11,7 @@ const TSUP_CONFIG: Options = {
 	entry: ['./src/index.ts'],
 	outDir: './dist',
 	format: ['cjs', 'esm'],
+	target: "es2022",
 	dts: true,
 	splitting: true,
 	sourcemap: true,

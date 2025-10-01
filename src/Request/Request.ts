@@ -1,6 +1,6 @@
-import { Hms_RequestInstance, Hms_RequestClass } from './RequestInterfaces';
-import { INVALID_URL } from '../utils/Error';
-import { addTrailingSlashToPathname, removeTrailingSlashFromPathname } from '../utils/url';
+import { Hms_RequestInstance, Hms_RequestClass } from './RequestInterfaces.js';
+import { INVALID_URL } from '../utils/Error.js';
+import { addTrailingSlashToPathname, removeTrailingSlashFromPathname } from '../utils/url.js';
 
 
 

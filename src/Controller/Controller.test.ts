@@ -1,8 +1,8 @@
 import { vi, describe, it, expect } from 'vitest';
 
-import Hms_Controller from './Controller';
-import Hms_Request from '../Request/Request';
-import Hms_Response from '../Response/Response';
+import Hms_Controller from './Controller.js';
+import Hms_Request from '../Request/Request.js';
+import Hms_Response from '../Response/Response.js';
 
 
 

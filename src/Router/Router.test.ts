@@ -1,9 +1,9 @@
 import { vi, beforeEach, describe, it, expect } from 'vitest';
 
-import Hms_Request from '../Request/Request';
-import Hms_Response from '../Response/Response';
-import { Hms_ControllerLike } from '../Controller/ControllerLike';
-import Hms_Router from './Router';
+import Hms_Request from '../Request/Request.js';
+import Hms_Response from '../Response/Response.js';
+import { Hms_ControllerLike } from '../Controller/ControllerLike.js';
+import Hms_Router from './Router.js';
 
 
 

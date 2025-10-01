@@ -1,8 +1,8 @@
-import { Hms_RouterInstance, Hms_RouterClass } from "./RouterInterfaces";
-import { Hms_ControllerLike } from "../Controller/ControllerLike";
-import Hms_Request from "../Request/Request";
-import Hms_Response from "../Response/Response";
-import { isValidPathname } from "../utils/url";
+import { Hms_RouterInstance, Hms_RouterClass } from "./RouterInterfaces.js";
+import { Hms_ControllerLike } from "../Controller/ControllerLike.js";
+import Hms_Request from "../Request/Request.js";
+import Hms_Response from "../Response/Response.js";
+import { isValidPathname } from "../utils/url.js";
 
 
 

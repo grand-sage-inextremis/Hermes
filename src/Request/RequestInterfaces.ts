@@ -1,4 +1,4 @@
-import { INVALID_URL } from "../utils/Error";
+import { INVALID_URL } from "../utils/Error.js";
 
 
 
