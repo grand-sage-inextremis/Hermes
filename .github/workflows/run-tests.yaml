@@ -11,7 +11,7 @@ on:
 
 
 jobs:
-    test-on-node18-20-22:
+    run-tests:
 
         name: Run tests on ${{ matrix.os }} and Node.js ${{ matrix.node-version }}
 
@@ -20,36 +20,20 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest, windows-latest, macOS-latest]
-                node-version: [18.x, 20.x, 22.x]
+                node-version: [18.x, 20.x, 22.x, 24.x]
                 # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
                 
         steps:
-          - uses: actions/checkout@v4
+          - if: ${{ matrix.node-version != '24.x' }}
+            uses: actions/checkout@v4
+          - if: ${{ matrix.node-version == '24.x' }}
+            uses: actions/checkout@v5
+
           - name: Setup Node.js ${{ matrix.node-version }}
             uses: actions/setup-node@v4
             with:
                 node-version: ${{ matrix.node-version }}
                 cache: 'npm'
           - run: npm clean-install
-          - run: npm run test
-    
-    
-    run-tests-on-node24:
 
-        name: Run tests on ${{ matrix.os }} and Node.js 24.x
-
-        runs-on: ${{ matrix.os }}
-
-        strategy:
-            matrix:
-                os: [ubuntu-latest, windows-latest, macOS-latest]
-                
-        steps:
-          - uses: actions/checkout@v5
-          - name: Setup Node.js 24.x
-            uses: actions/setup-node@v4
-            with:
-                node-version: 24.x
-                cache: 'npm'
-          - run: npm clean-install
           - run: npm run test
