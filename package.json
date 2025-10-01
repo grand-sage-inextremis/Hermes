@@ -27,7 +27,7 @@
 		"./LICENSE"
 	],
 	"scripts": {
-		"test": "(ENV=test tsup && vitest) ; rm -r ./build-test/",
+		"test": "tsc --project ./tsconfig.test.json && vitest",
 		"build": "cross-env ENV=production tsup",
 		"build:dev": "cross-env ENV=development tsup"
 	},

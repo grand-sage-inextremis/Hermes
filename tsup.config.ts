@@ -27,12 +27,5 @@ if (ENV === 'development')
 }
 
 
-if (ENV === 'test')
-{
-	TSUP_CONFIG.entry = ['./src/index.test.ts'];
-	TSUP_CONFIG.outDir = './build-test';
-}
-
-
 
 export default defineConfig(TSUP_CONFIG);
