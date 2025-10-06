@@ -1,5 +1,4 @@
 import { Hms_RequestInstance, Hms_RequestClass } from './RequestInterfaces.js';
-import { INVALID_URL } from '../utils/Error.js';
 import { addTrailingSlashToPathname, removeTrailingSlashFromPathname } from '../utils/url.js';
 
 
@@ -21,7 +20,7 @@ const Hms_Request: Hms_RequestClass = class HRequest implements Hms_RequestInsta
 
 
 
-	public static create(url: URL | string): Hms_Request
+	public static create(url: URL | string): Hms_Request | null
 	{
 		let url_asURL: URL;
 
@@ -32,7 +31,7 @@ const Hms_Request: Hms_RequestClass = class HRequest implements Hms_RequestInsta
 			}
 			catch (err)
 			{
-				throw INVALID_URL(url);
+				return null;
 			}
 		}
 		else {

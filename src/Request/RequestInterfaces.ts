@@ -1,17 +1,11 @@
-import { INVALID_URL } from "../utils/Error.js";
-
-
-
 export interface Hms_RequestClass
 {
 	/**
 	 * Creates a request from a URL.
 	 * 
-	 * @returns A request if `url` is a valid URL.
-	 * 
-	 * @throws An {@link INVALID_URL `INVALID_URL(url)`} error if `url` is an invalid URL.
+	 * @returns A request if `url` is a valid URL; `null` otherwise.
 	 */
-	create(url: URL | string): Hms_RequestInstance;
+	create(url: URL | string): Hms_RequestInstance | null;
 
 	new (url: URL): Hms_RequestInstance;
 }

@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
 import Hms_Request from './Request.js';
-import { INVALID_URL } from '../utils/Error.js';
 
 
 
@@ -10,14 +9,16 @@ import { INVALID_URL } from '../utils/Error.js';
  * @param givenRequest The request to be tested.
  * @param expectedRequest An object whose properties have the expected values.
  */
-function testRequest(requestTest : {expect: Hms_Request, toBe: Omit<Hms_Request, 'updateRelativePathname'>}): void
+function testRequest(requestTest : {expect: Hms_Request | null, toBe: Omit<Hms_Request, 'updateRelativePathname'>}): void
 {
 	const givenRequest = requestTest.expect;
 	const expectedRequest = requestTest.toBe;
 
-	expect(givenRequest.url.href).toBe(expectedRequest.url.href);
-	expect(givenRequest.pathnameBase).toBe(expectedRequest.pathnameBase);
-	expect(givenRequest.relativePathname).toBe(expectedRequest.relativePathname);
+	expect(givenRequest).not.toBe(null);
+
+	expect((givenRequest as Hms_Request).url.href).toBe(expectedRequest.url.href);
+	expect((givenRequest as Hms_Request).pathnameBase).toBe(expectedRequest.pathnameBase);
+	expect((givenRequest as Hms_Request).relativePathname).toBe(expectedRequest.relativePathname);
 }
 
 
@@ -30,7 +31,7 @@ function testRequest(requestTest : {expect: Hms_Request, toBe: Omit<Hms_Request,
  * @param givenRiquests The requests to be tested.
  * @param expectedRequest An object whose properties have the expected values.
  */
-function testRequests(requestsTest: {expect: Array<Hms_Request>, toBe: Omit<Hms_Request, 'updateRelativePathname'>}): void
+function testRequests(requestsTest: {expect: Array<Hms_Request | null>, toBe: Omit<Hms_Request, 'updateRelativePathname'>}): void
 {
 	const givenRequests = requestsTest.expect;
 	const expectedRequest = requestsTest.toBe;
@@ -53,22 +54,20 @@ describe("`Hms_Request` class", function ()
 
 describe("Hms_Request.create(url: string)", function ()
 {
-	it("throws an error if `url` is an empty string", function ()
+	it("returns `null` if `url` is an empty string", function ()
 	{
-		const generateGivenRequest = () => Hms_Request.create('');
-		const expectedError = INVALID_URL('');
+		const givenRequest = Hms_Request.create('');
 
-		expect(generateGivenRequest).toThrow(expectedError);
+		expect(givenRequest).toBe(null);
 	});
 
 
 
-	it("throws an error if `url` is an invalid URL", function ()
+	it("returns `null` if `url` is an invalid URL", function ()
 	{
-		const generateGivenRequest = () => Hms_Request.create('media-inextremis.net');
-		const expectedError = INVALID_URL('media-inextremis.net');
+		const givenRequest = Hms_Request.create('media-inextremis.net');
 
-		expect(generateGivenRequest).toThrow(expectedError);
+		expect(givenRequest).toBe(null);
 	});
 
 
@@ -198,7 +197,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/',							// Slash
 			'',								// Empty string
 			'/other',						// Different pathname
@@ -241,7 +240,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/projects',
 			'/projects/hermes',
 			'/projects/hermes/docs',
@@ -287,14 +286,14 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/'
 		]);
 
 		expect(chosenPathname).not.toBe('/');
 
 		
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/projects',
 			'/'
 		]);
@@ -310,8 +309,18 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		
 		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
 		
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+
 		
-		chosenPathname = givenRequest.updateRelativePathname(['/projects/hermes/docs']);
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname(['/projects/hermes/docs']);
 
 		testRequest({
 			expect: givenRequest,
@@ -323,7 +332,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/hermes',
 			'/hades1',
 			'/other'
@@ -349,8 +358,18 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		
 		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
 		
+
+		testRequest({
+			expect: givenRequest,
+			toBe: {
+				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathnameBase: '/',
+				relativePathname: '/projects/hermes/docs'
+			}
+		});
+
 		
-		chosenPathname = givenRequest.updateRelativePathname(['/projects/hermes/docs']);
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname(['/projects/hermes/docs']);
 
 		testRequest({
 			expect: givenRequest,
@@ -362,7 +381,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/',
 			'/hermes',
 			'/hades1',
@@ -385,7 +404,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 
 	it("always updates `this.relativePathname` and `this.pathnameBase` correctly and returns the element of\n\t `pathnameList` that has matched the beginning of `this.relativePathname`, regardless of its index", function ()
 	{
-		let givenRequest: Hms_Request;
+		let givenRequest: Hms_Request | null;
 		let chosenPathname: string;
 
 		
@@ -401,7 +420,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/projects',
 			'/',							// Slash
 			'',								// Empty string
@@ -438,7 +457,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/',							// Slash
 			'',								// Empty string
 			'/other',						// Different pathname
@@ -475,7 +494,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/',							// Slash
 			'',								// Empty string
 			'/other',						// Different pathname
@@ -519,7 +538,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/projects',
 			'/',							// Slash
 			'',								// Empty string
@@ -544,7 +563,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 		
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/hermes',
 			'/',					// Slash
 			'',						// Empty string
@@ -568,7 +587,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 		
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/docs',
 			'/',			// Slash
 			'',				// Empty string
@@ -590,7 +609,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 		
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/',		// Slash
 			'',			// Empty string
 			'/page1'	// Too long, should be "/"
@@ -608,7 +627,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 		
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'',			// Empty string
 			'/page1'	// Too long, should be "/"
 		]);
@@ -625,7 +644,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		});
 		
 
-		chosenPathname = givenRequest.updateRelativePathname([
+		chosenPathname = (givenRequest as Hms_Request).updateRelativePathname([
 			'/page1'	// Too long, should be "/"
 		]);
 

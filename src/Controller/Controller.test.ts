@@ -24,6 +24,11 @@ describe("Hms_Controller.prototype.run(req, res)", function ()
 		let req = Hms_Request.create('http://media-inextremis.net/planets/venus');
 		let res = new Hms_Response();
 
+		if (req === null)
+		{
+			throw '';
+		}
+
 		controller.run(req, res);
 
 		
