@@ -7,14 +7,14 @@ import Hms_Response from '../Response/Response.js';
 export interface Hms_RouterClass
 {
 	/** Creates a router. */
-	create(): Hms_RouterInstance;
+	create<Hms_GenericRequest extends Hms_Request, Hms_GenericResponse extends Hms_Response>(): Hms_RouterInstance<Hms_GenericRequest, Hms_GenericResponse>;
 
-	new (): Hms_RouterInstance;
+	new <Hms_GenericRequest extends Hms_Request, Hms_GenericResponse extends Hms_Response>(): Hms_RouterInstance<Hms_GenericRequest, Hms_GenericResponse>;
 }
 
 
 
-export interface Hms_RouterInstance extends Hms_ControllerLike
+export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms_Request, Hms_GenericResponse extends Hms_Response = Hms_Response> extends Hms_ControllerLike<Hms_GenericRequest, Hms_GenericResponse>
 {
 	/**
 	 * Indicates what type of controller-like was run during the last run of the router.
@@ -95,7 +95,7 @@ export interface Hms_RouterInstance extends Hms_ControllerLike
 	 * 	// So no controller-like is run.
 	 * ```
 	 */
-	run(req: Hms_Request, res: Hms_Response): this;
+	run(req: Hms_GenericRequest, res: Hms_GenericResponse): this;
 
 	/**
 	 * Adds a route to the router.
@@ -152,7 +152,7 @@ export interface Hms_RouterInstance extends Hms_ControllerLike
 	 * 	// So controllerLike3 is run.
 	 * ```
 	 */
-	use(pathname: string, controllerLike: Hms_ControllerLike): this;
+	use(pathname: string, controllerLike: Hms_ControllerLike<Hms_GenericRequest, Hms_GenericResponse>): this;
 
 	/**
 	 * Adds a default route to the router.
@@ -181,5 +181,5 @@ export interface Hms_RouterInstance extends Hms_ControllerLike
 	 * 	// So controllerLike3 is run.
 	 * ```
 	 */
-	useDefault(controllerLike: Hms_ControllerLike): this;
+	useDefault(controllerLike: Hms_ControllerLike<Hms_GenericRequest, Hms_GenericResponse>): this;
 }

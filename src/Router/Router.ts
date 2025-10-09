@@ -6,10 +6,10 @@ import { isValidPathname } from "../utils/url.js";
 
 
 
-const Hms_Router: Hms_RouterClass = class Hms_Router implements Hms_RouterInstance
+const Hms_Router: Hms_RouterClass = class Hms_Router<Hms_GenericRequest extends Hms_Request = Hms_Request, Hms_GenericResponse extends Hms_Response = Hms_Response> implements Hms_RouterInstance<Hms_GenericRequest, Hms_GenericResponse>
 {
-	private _defaultRoute?: Hms_ControllerLike;
-	private _routes: {[pathname: string]: Hms_ControllerLike};
+	private _defaultRoute?: Hms_ControllerLike<Hms_GenericRequest, Hms_GenericResponse>;
+	private _routes: {[pathname: string]: Hms_ControllerLike<Hms_GenericRequest, Hms_GenericResponse>};
 	private _selectedTypeOfController: 'none' | 'default' | 'specific';
 
 
@@ -22,7 +22,7 @@ const Hms_Router: Hms_RouterClass = class Hms_Router implements Hms_RouterInstan
 
 
 
-	public static create(): Hms_Router
+	public static create<Hms_GenericRequest extends Hms_Request, Hms_GenericResponse extends Hms_Response>(): Hms_Router<Hms_GenericRequest, Hms_GenericResponse>
 	{
 		return new Hms_Router();
 	}
@@ -36,7 +36,7 @@ const Hms_Router: Hms_RouterClass = class Hms_Router implements Hms_RouterInstan
 
 
 
-	public use(pathname: string, controller: Hms_ControllerLike): this
+	public use(pathname: string, controller: Hms_ControllerLike<Hms_GenericRequest, Hms_GenericResponse>): this
 	{
 		if (isValidPathname(pathname))
 		{
@@ -48,7 +48,7 @@ const Hms_Router: Hms_RouterClass = class Hms_Router implements Hms_RouterInstan
 
 
 
-	public useDefault(controller: Hms_ControllerLike): this
+	public useDefault(controller: Hms_ControllerLike<Hms_GenericRequest, Hms_GenericResponse>): this
 	{
 		this._defaultRoute = controller;
 
@@ -57,7 +57,7 @@ const Hms_Router: Hms_RouterClass = class Hms_Router implements Hms_RouterInstan
 
 
 
-	public run(req: Hms_Request, res: Hms_Response): this
+	public run(req: Hms_GenericRequest, res: Hms_GenericResponse): this
 	{
 		let routePathnames = Object.keys(this._routes);
 		let selectedRoutePathname = req.updateRelativePathname(routePathnames);
@@ -86,7 +86,7 @@ const Hms_Router: Hms_RouterClass = class Hms_Router implements Hms_RouterInstan
 
 
 
-type Hms_Router = InstanceType<typeof Hms_Router>;
+type Hms_Router<Hms_GenericRequest extends Hms_Request = Hms_Request, Hms_GenericResponse extends Hms_Response = Hms_Response> = InstanceType<typeof Hms_Router<Hms_GenericRequest, Hms_GenericResponse>>;
 
 
 

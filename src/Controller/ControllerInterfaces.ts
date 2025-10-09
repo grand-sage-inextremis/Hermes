@@ -13,14 +13,14 @@ export interface Hms_ControllerClass
 	 * 
 	 * @returns The new controller.
 	 */
-	create(controllerFunction: (req: Hms_Request, res: Hms_Response) => unknown): Hms_ControllerInstance;
+	create<Hms_GenericRequest extends Hms_Request, Hms_GenericResponse extends Hms_Response>(controllerFunction: (req: Hms_GenericRequest, res: Hms_GenericResponse) => unknown): Hms_ControllerInstance<Hms_GenericRequest, Hms_GenericResponse>;
 
-	new (controllerFunction: (req: Hms_Request, res: Hms_Response) => unknown): Hms_ControllerInstance;
+	new <Hms_GenericRequest extends Hms_Request, Hms_GenericResponse extends Hms_Response>(controllerFunction: (req: Hms_GenericRequest, res: Hms_GenericResponse) => unknown): Hms_ControllerInstance<Hms_GenericRequest, Hms_GenericResponse>;
 }
 
 
 
-export interface Hms_ControllerInstance extends Hms_ControllerLike
+export interface Hms_ControllerInstance<Hms_GenericRequest extends Hms_Request = Hms_Request, Hms_GenericResponse extends Hms_Response = Hms_Response> extends Hms_ControllerLike<Hms_GenericRequest, Hms_GenericResponse>
 {
 	/**
 	 * Runs the controller.
@@ -28,5 +28,5 @@ export interface Hms_ControllerInstance extends Hms_ControllerLike
 	 * @param req The request that is handled by the controller.
 	 * @param res The response of the controller.
 	 */
-	run(req: Hms_Request, res: Hms_Response): this;
+	run(req: Hms_GenericRequest, res: Hms_GenericResponse): this;
 }
