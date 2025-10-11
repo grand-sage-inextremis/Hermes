@@ -93,12 +93,14 @@ it("exports the `Hms_Request`, `Hms_Response`, `Hms_Controller`, and `Hms_Router
 
 it("exports functions to instanciate the `Hms_Request`, `Hms_Response`, `Hms_Controller`, and `Hms_Router` classes through the `Hermes` namespace", function ()
 {
-	const request = Hermes.createRequest('http://media-inextremis/');
+	const request_invalidPathname = Hermes.createRequest('');
+	const request_validPathname = Hermes.createRequest('/');
 	const response = Hermes.createResponse();
 	const controller = Hermes.createController((req, res) => null);
 	const router = Hermes.createRouter();
 
-	expect(request).toBeInstanceOf(Hms_Request);
+	expect(request_invalidPathname).toBe(null);
+	expect(request_validPathname).toBeInstanceOf(Hms_Request);
 	expect(response).toBeInstanceOf(Hms_Response);
 	expect(controller).toBeInstanceOf(Hms_Controller);
 	expect(router).toBeInstanceOf(Hms_Router);

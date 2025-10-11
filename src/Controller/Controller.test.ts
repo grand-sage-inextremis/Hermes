@@ -21,7 +21,7 @@ describe("Hms_Controller.prototype.run(req, res)", function ()
 
 		let controller = Hms_Controller.create(mockControllerFunction);
 
-		let req = Hms_Request.create('http://media-inextremis.net/planets/venus');
+		let req = Hms_Request.create('/planets/venus');
 		let res = new Hms_Response();
 
 		if (req === null)

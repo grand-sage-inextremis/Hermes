@@ -3,19 +3,19 @@ export interface Hms_RequestClass
 	/**
 	 * Creates a request from a URL.
 	 * 
-	 * @returns A request if `url` is a valid URL; `null` otherwise.
+	 * @returns A request if `pathname` is a valid URL; `null` otherwise.
 	 */
-	create(url: URL | string): Hms_RequestInstance | null;
+	create(pathname: string): Hms_RequestInstance | null;
 
-	new (url: URL): Hms_RequestInstance;
+	new (pathname: string): Hms_RequestInstance;
 }
 
 
 
 export interface Hms_RequestInstance
 {
-	/** The URL of the request. */
-	readonly url: URL;
+	/** The pathname of the request. */
+	readonly pathname: string;
 
 	/**
 	 * The pathname on which the controller is mounted.
@@ -26,7 +26,7 @@ export interface Hms_RequestInstance
 	 * 
 	 * 	router.use('/projects', function (req, res)
 	 * 	{
-	 * 		console.log(req.url.pathname);		// Output: "/projects/hermes"
+	 * 		console.log(req.pathname);			// Output: "/projects/hermes"
 	 * 		
 	 * 		console.log(req.pathnameBase);		// Output: "/projects"
 	 * 		console.log(req.relativePathname);	// Output: "/hermes"
@@ -43,7 +43,7 @@ export interface Hms_RequestInstance
 	 * 
 	 * 	router.use('/projects', function (req, res)
 	 * 	{
-	 * 		console.log(req.url.pathname);		// Output: "/projects/hermes"
+	 * 		console.log(req.pathname);			// Output: "/projects/hermes"
 	 * 
 	 * 		console.log(req.pathnameBase);		// Output: "/projects"
 	 * 		console.log(req.relativePathname);	// Output: "/hermes"
@@ -79,7 +79,7 @@ export interface Hms_RequestInstance
 	 * 
 	 * @example
 	 * 
-	 * 		console.log(req.url.pathname);		// Output: "/projects/hermes-v1/docs"
+	 * 		console.log(req.pathname);			// Output: "/projects/hermes-v1/docs"
 	 * 		console.log(req.pathnameBase);		// Output: "/projects"
 	 * 		console.log(req.relativePathname);	// Output: "/hermes-v1/docs"
 	 * 
@@ -106,7 +106,7 @@ export interface Hms_RequestInstance
 	 * 
 	 * @example
 	 * 
-	 * 		console.log(req.url.pathname);		// Output: "/projects/hermes/docs"
+	 * 		console.log(req.pathname);			// Output: "/projects/hermes/docs"
 	 * 		console.log(req.pathnameBase);		// Output: "/projects"
 	 * 		console.log(req.relativePathname);	// Output: "/hermes/docs"
 	 * 

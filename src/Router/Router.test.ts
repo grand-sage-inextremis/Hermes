@@ -72,7 +72,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router = Hms_Router.create();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/');
+		req = Hms_Request.create('/');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -88,7 +88,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/some/random/pathname');
+		req = Hms_Request.create('/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -118,7 +118,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.use('/route3', controllerLike3);
 
 		
-		req = Hms_Request.create('http://media-inextremis.net/some/random/pathname');
+		req = Hms_Request.create('/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -140,7 +140,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/route');
+		req = Hms_Request.create('/route');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -162,7 +162,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/route/some/random/pathname');
+		req = Hms_Request.create('/route/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -184,7 +184,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/route20');
+		req = Hms_Request.create('/route20');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -206,7 +206,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/route20/some/random/pathname');
+		req = Hms_Request.create('/route20/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -239,7 +239,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.useDefault(controllerLike_default);
 
 
-		req = Hms_Request.create('http://media-inextremis.net/');
+		req = Hms_Request.create('/');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -260,7 +260,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/some/random/pathname');
+		req = Hms_Request.create('/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -296,7 +296,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.useDefault(controllerLike_default);
 
 
-		req = Hms_Request.create('http://media-inextremis.net/some/random/pathname');
+		req = Hms_Request.create('/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -322,7 +322,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route');
+		req = Hms_Request.create('/route');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -348,7 +348,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route/some/random/pathname');
+		req = Hms_Request.create('/route/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -374,7 +374,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/route20');
+		req = Hms_Request.create('/route20');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -400,7 +400,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/route20/some/random/pathname');
+		req = Hms_Request.create('/route20/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -444,7 +444,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.useDefault(controllerLike_default);
 
 
-		req = Hms_Request.create('http://media-inextremis.net/');
+		req = Hms_Request.create('/');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -470,7 +470,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route2');
+		req = Hms_Request.create('/route2');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -481,7 +481,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 		
 		
-		req_updated = Hms_Request.create('http://media-inextremis.net/route2');
+		req_updated = Hms_Request.create('/route2');
 
 		if (req_updated === null)
 		{
@@ -507,7 +507,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route2/some/random/pathname');
+		req = Hms_Request.create('/route2/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -518,7 +518,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 		
 		
-		req_updated = Hms_Request.create('http://media-inextremis.net/route2/some/random/pathname');
+		req_updated = Hms_Request.create('/route2/some/random/pathname');
 
 		if (req_updated === null)
 		{
@@ -561,7 +561,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.useDefault(controllerLike_default3);
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/some/random/pathname');
+		req = Hms_Request.create('/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -607,7 +607,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.useDefault(controllerLike_default);
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/');
+		req = Hms_Request.create('/');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -642,7 +642,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.useDefault(controllerLike_default);
 		
 
-		req = Hms_Request.create('http://media-inextremis.net/route3');
+		req = Hms_Request.create('/route3');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -653,7 +653,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 
 
-		req_updated = Hms_Request.create('http://media-inextremis.net/route3');
+		req_updated = Hms_Request.create('/route3');
 
 		if (req_updated === null)
 		{
@@ -679,7 +679,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route3/some/random/pathname');
+		req = Hms_Request.create('/route3/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -690,7 +690,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 
 
-		req_updated = Hms_Request.create('http://media-inextremis.net/route3/some/random/pathname');
+		req_updated = Hms_Request.create('/route3/some/random/pathname');
 
 		if (req_updated === null)
 		{
@@ -736,7 +736,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 		// RUNS controllerLike_root
 
-		req = Hms_Request.create('http://media-inextremis.net/');
+		req = Hms_Request.create('/');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -764,7 +764,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 		// RUNS controllerLike1
 
-		req = Hms_Request.create('http://media-inextremis.net/route1');
+		req = Hms_Request.create('/route1');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -775,7 +775,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 
 
-		req_updated = Hms_Request.create('http://media-inextremis.net/route1');
+		req_updated = Hms_Request.create('/route1');
 
 		if (req_updated === null)
 		{
@@ -801,7 +801,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route1/some/random/pathname');
+		req = Hms_Request.create('/route1/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -812,7 +812,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 
 
-		req_updated = Hms_Request.create('http://media-inextremis.net/route1/some/random/pathname');
+		req_updated = Hms_Request.create('/route1/some/random/pathname');
 
 		if (req_updated === null)
 		{
@@ -840,7 +840,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 		// RUNS controllerLike2
 
-		req = Hms_Request.create('http://media-inextremis.net/route1/route2');
+		req = Hms_Request.create('/route1/route2');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -851,7 +851,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 
 
-		req_updated = Hms_Request.create('http://media-inextremis.net/route1/route2');
+		req_updated = Hms_Request.create('/route1/route2');
 
 		if (req_updated === null)
 		{
@@ -877,7 +877,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route1/route2/some/random/pathname');
+		req = Hms_Request.create('/route1/route2/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -888,7 +888,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 
 
-		req_updated = Hms_Request.create('http://media-inextremis.net/route1/route2/some/random/pathname');
+		req_updated = Hms_Request.create('/route1/route2/some/random/pathname');
 
 		if (req_updated === null)
 		{
@@ -916,7 +916,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 		// RUNS controllerLike3
 
-		req = Hms_Request.create('http://media-inextremis.net/route1/route2/route3');
+		req = Hms_Request.create('/route1/route2/route3');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -927,7 +927,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 
 
-		req_updated = Hms_Request.create('http://media-inextremis.net/route1/route2/route3');
+		req_updated = Hms_Request.create('/route1/route2/route3');
 
 		if (req_updated === null)
 		{
@@ -953,7 +953,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route1/route2/route3/some/random/pathname');
+		req = Hms_Request.create('/route1/route2/route3/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -964,7 +964,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.run(req, res);
 
 
-		req_updated = Hms_Request.create('http://media-inextremis.net/route1/route2/route3/some/random/pathname');
+		req_updated = Hms_Request.create('/route1/route2/route3/some/random/pathname');
 
 		if (req_updated === null)
 		{
@@ -1003,7 +1003,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		router.useDefault(controllerLike_default);
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route1');
+		req = Hms_Request.create('/route1');
 		res = new Hms_Response();
 
 		if (req === null)
@@ -1027,7 +1027,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		resetMocks();
 
 
-		req = Hms_Request.create('http://media-inextremis.net/route1/some/random/pathname');
+		req = Hms_Request.create('/route1/some/random/pathname');
 		res = new Hms_Response();
 
 		if (req === null)

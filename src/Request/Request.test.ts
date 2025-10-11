@@ -16,7 +16,7 @@ function testRequest(requestTest : {expect: Hms_Request | null, toBe: Omit<Hms_R
 
 	expect(givenRequest).not.toBe(null);
 
-	expect((givenRequest as Hms_Request).url.href).toBe(expectedRequest.url.href);
+	expect((givenRequest as Hms_Request).pathname).toBe(expectedRequest.pathname);
 	expect((givenRequest as Hms_Request).pathnameBase).toBe(expectedRequest.pathnameBase);
 	expect((givenRequest as Hms_Request).relativePathname).toBe(expectedRequest.relativePathname);
 }
@@ -52,35 +52,27 @@ describe("`Hms_Request` class", function ()
 
 
 
-describe("Hms_Request.create(url: string)", function ()
+describe("Hms_Request.create(pathname: string)", function ()
 {
-	it("returns `null` if `url` is an empty string", function ()
+	it("returns `null` if `pathname` is an invalid pathname", function ()
 	{
-		const givenRequest = Hms_Request.create('');
+		let givenRequest: Hms_Request | null;
+		
+		givenRequest = Hms_Request.create('');
+		expect(givenRequest).toBe(null);
 
+		givenRequest = Hms_Request.create('projects/hermes');
 		expect(givenRequest).toBe(null);
 	});
 
 
 
-	it("returns `null` if `url` is an invalid URL", function ()
+	it("returns the correct `Hms_Request` instance if `pathname` is the root", function ()
 	{
-		const givenRequest = Hms_Request.create('media-inextremis.net');
-
-		expect(givenRequest).toBe(null);
-	});
-
-
-
-	it("returns the correct URL if the `url`'s pathname is the root", function ()
-	{
-		testRequests({
-			expect: [
-				Hms_Request.create('http://media-inextremis.net'),
-				Hms_Request.create('http://media-inextremis.net/')
-			],
+		testRequest({
+			expect: Hms_Request.create('/'),
 			toBe: {
-				url: new URL('http://media-inextremis.net/'),
+				pathname: '/',
 				pathnameBase: '/',
 				relativePathname: '/'
 			}
@@ -89,86 +81,15 @@ describe("Hms_Request.create(url: string)", function ()
 
 
 
-	it("returns the correct URL if `url` contains any pathname", function ()
+	it("returns the correct `Hms_Request` instance if `pathname` is any pathname", function ()
 	{
 		testRequests({
 			expect: [
-				Hms_Request.create('http://media-inextremis.net/projects/hermes'),
-				Hms_Request.create('http://media-inextremis.net/projects/hermes/')
+				Hms_Request.create('/projects/hermes'),
+				Hms_Request.create('/projects/hermes/')
 			],
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes'),
-				pathnameBase: '/',
-				relativePathname: '/projects/hermes'
-			}
-		});
-	});
-
-
-
-	it("returns the correct URL if `url` contains a query string and a hash", function ()
-	{
-		testRequests({
-			expect: [
-				Hms_Request.create('http://media-inextremis.net/projects/hermes?query1=value1&query2=value2#fragment'),
-				Hms_Request.create('http://media-inextremis.net/projects/hermes/?query1=value1&query2=value2#fragment')
-			],
-			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes?query1=value1&query2=value2#fragment'),
-				pathnameBase: '/',
-				relativePathname: '/projects/hermes'
-			}
-		});
-	});
-});
-
-
-
-describe("Hms_Request.create(url: URL)", function ()
-{
-	it("returns the correct URL if the `url`'s pathname is the root", function ()
-	{
-		testRequests({
-			expect: [
-				Hms_Request.create(new URL('http://media-inextremis.net')),
-				Hms_Request.create(new URL('http://media-inextremis.net/'))
-			],
-			toBe: {
-				url: new URL('http://media-inextremis.net/'),
-				pathnameBase: '/',
-				relativePathname: '/'
-			}
-		});
-	});
-
-
-
-	it("returns the correct URL if `url` contains any pathname", function ()
-	{
-		testRequests({
-			expect: [
-				Hms_Request.create(new URL('http://media-inextremis.net/projects/hermes')),
-				Hms_Request.create(new URL('http://media-inextremis.net/projects/hermes/'))
-			],
-			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes'),
-				pathnameBase: '/',
-				relativePathname: '/projects/hermes'
-			}
-		});
-	});
-
-
-
-	it("returns the correct URL if `url` contains a query string and a hash", function ()
-	{
-		testRequests({
-			expect: [
-				Hms_Request.create(new URL('http://media-inextremis.net/projects/hermes?query1=value1&query2=value2#fragment')),
-				Hms_Request.create(new URL('http://media-inextremis.net/projects/hermes/?query1=value1&query2=value2#fragment'))
-			],
-			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes?query1=value1&query2=value2#fragment'),
+				pathname: '/projects/hermes',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes'
 			}
@@ -184,13 +105,13 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 	{
 		let chosenPathname: string;
 		
-		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		let givenRequest = Hms_Request.create('/projects/hermes/docs');
 		
 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -214,7 +135,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -227,13 +148,13 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 	{
 		let chosenPathname: string;
 		
-		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		let givenRequest = Hms_Request.create('/projects/hermes/docs');
 		
 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -260,7 +181,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes/docs',
 				relativePathname: '/'
 			}
@@ -273,13 +194,13 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 	{
 		let chosenPathname: string;
 		
-		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		let givenRequest = Hms_Request.create('/projects/hermes/docs');
 		
 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -307,13 +228,13 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 	{
 		let chosenPathname: string;
 		
-		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		let givenRequest = Hms_Request.create('/projects/hermes/docs');
 		
 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -325,7 +246,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes/docs',
 				relativePathname: '/'
 			}
@@ -343,7 +264,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes/docs',
 				relativePathname: '/'
 			}
@@ -356,13 +277,13 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 	{
 		let chosenPathname: string;
 		
-		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		let givenRequest = Hms_Request.create('/projects/hermes/docs');
 		
 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -374,7 +295,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes/docs',
 				relativePathname: '/'
 			}
@@ -393,7 +314,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes/docs',
 				relativePathname: '/'
 			}
@@ -408,12 +329,12 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		let chosenPathname: string;
 
 		
-		givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		givenRequest = Hms_Request.create('/projects/hermes/docs');
 		
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -438,19 +359,19 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects',
 				relativePathname: '/hermes/docs'
 			}
 		});
 
 		
-		givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		givenRequest = Hms_Request.create('/projects/hermes/docs');
 		
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -475,19 +396,19 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects',
 				relativePathname: '/hermes/docs'
 			}
 		});
 
 		
-		givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		givenRequest = Hms_Request.create('/projects/hermes/docs');
 		
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -512,7 +433,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects',
 				relativePathname: '/hermes/docs'
 			}
@@ -525,13 +446,13 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 	{
 		let chosenPathname: string;
 
-		let givenRequest = Hms_Request.create('http://media-inextremis.net/projects/hermes/docs');
+		let givenRequest = Hms_Request.create('/projects/hermes/docs');
 
 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/',
 				relativePathname: '/projects/hermes/docs'
 			}
@@ -556,7 +477,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects',
 				relativePathname: '/hermes/docs'
 			}
@@ -580,7 +501,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes',
 				relativePathname: '/docs'
 			}
@@ -602,7 +523,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes/docs',
 				relativePathname: '/'
 			}
@@ -620,7 +541,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes/docs',
 				relativePathname: '/'
 			}
@@ -637,7 +558,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes/docs',
 				relativePathname: '/'
 			}
@@ -653,7 +574,7 @@ describe("Hms_Request.prototype.updateRelativePathname(pathnameList)", function 
 		testRequest({
 			expect: givenRequest,
 			toBe: {
-				url: new URL('http://media-inextremis.net/projects/hermes/docs'),
+				pathname: '/projects/hermes/docs',
 				pathnameBase: '/projects/hermes/docs',
 				relativePathname: '/'
 			}

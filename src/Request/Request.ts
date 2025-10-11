@@ -1,45 +1,31 @@
 import { Hms_RequestInstance, Hms_RequestClass } from './RequestInterfaces.js';
-import { addTrailingSlashToPathname, removeTrailingSlashFromPathname } from '../utils/url.js';
+import { addTrailingSlashToPathname, removeTrailingSlashFromPathname, isValidPathname } from '../utils/url.js';
 
 
 
 const Hms_Request: Hms_RequestClass = class HRequest implements Hms_RequestInstance
 {
-	public readonly url: URL;
+	public readonly pathname: string;
 	private _pathnameBaseLength: number;
 	
 
 
-	constructor(url: URL)
+	constructor(pathname: string)
 	{
-		this.url = url;
-		this.url.pathname = removeTrailingSlashFromPathname(this.url.pathname);
-
+		this.pathname = pathname;
 		this._pathnameBaseLength = 0;
 	}
 
 
 
-	public static create(url: URL | string): Hms_Request | null
+	public static create(pathname: string): Hms_Request | null
 	{
-		let url_asURL: URL;
-
-		if (typeof url === 'string')
+		if (!isValidPathname(pathname))
 		{
-			try {
-				url_asURL = new URL(url);
-			}
-			catch (err)
-			{
-				return null;
-			}
-		}
-		else {
-			url_asURL = url;
+			return null;
 		}
 
-		return new Hms_Request(url_asURL);
-		
+		return new Hms_Request(removeTrailingSlashFromPathname(pathname));
 	}
 
 
@@ -51,19 +37,19 @@ const Hms_Request: Hms_RequestClass = class HRequest implements Hms_RequestInsta
 			return '/';
 		}
 
-		return this.url.pathname.slice(0, this._pathnameBaseLength);
+		return this.pathname.slice(0, this._pathnameBaseLength);
 	}
 
 
 
 	public get relativePathname(): string
 	{
-		if (this._pathnameBaseLength === this.url.pathname.length)
+		if (this._pathnameBaseLength === this.pathname.length)
 		{
 			return '/';
 		}
 		
-		return this.url.pathname.slice(this._pathnameBaseLength);
+		return this.pathname.slice(this._pathnameBaseLength);
 	}
 
 
