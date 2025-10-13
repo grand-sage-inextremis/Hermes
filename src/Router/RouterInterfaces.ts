@@ -58,7 +58,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * - **Case 1**: If a route's pathname matches the beginning of `req.relativePathname`, then the controller-like mounted on this route is run.
 	 * 
 	 * ```
-	 * 	let req = Hms_Request.create('http://media-inextremis.net/route2/some/random/pathname');
+	 * 	let req = Hms_Request.create('/route2/some/random/pathname');
 	 * 	let res = new Hms_Response();
 	 * 
 	 * 	router.run(req, res);
@@ -71,7 +71,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * then the default controller-like is run.
 	 * 
 	 * ```
-	 * 	let req = Hms_Request.create('http://media-inextremis.net/route66/some/random/pathname');
+	 * 	let req = Hms_Request.create('/route66/some/random/pathname');
 	 * 	let res = new Hms_Response();
 	 * 
 	 * 	router.run(req, res);
@@ -86,7 +86,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * ```
 	 * 	// Let's assume that router.useDefault() has never been called.
 	 * 
-	 * 	let req = Hms_Request.create('http://media-inextremis.net/route66/some/random/pathname');
+	 * 	let req = Hms_Request.create('/route66/some/random/pathname');
 	 * 	let res = new Hms_Response();
 	 * 
 	 * 	router.run(req, res);
@@ -120,7 +120,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * 	router.use('/route', controllerLike3);
 	 * 	router.useDefault(controllerLike_default);
 	 * 
-	 * 	let req = Hms_Request.create('http://media-inextremis.net/route/some/random/pathname');
+	 * 	let req = Hms_Request.create('/route/some/random/pathname');
 	 * 	let res = new Hms_Response();
 	 * 
 	 * 	router.run(req, res);
@@ -143,7 +143,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * 	router.use('/route1/route2/route3', controllerLike3);
 	 * 	router.useDefault(controllerLike_default);
 	 * 
-	 * 	let req = Hms_Request.create('http://media-inextremis.net/route1/route2/route3/some/random/pathname');
+	 * 	let req = Hms_Request.create('/route1/route2/route3/some/random/pathname');
 	 * 	let res = new Hms_Response();
 	 * 
 	 * 	router.run(req, res);
@@ -172,7 +172,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * 	router.useDefault(controllerLike2);
 	 * 	router.useDefault(controllerLike3);
 	 * 
-	 * 	let req = Hms_Request.create('http://media-inextremis.net/some/random/pathname');
+	 * 	let req = Hms_Request.create('/some/random/pathname');
 	 * 	let res = new Hms_Response();
 	 * 
 	 * 	router.run(req, res);

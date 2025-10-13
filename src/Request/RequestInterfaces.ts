@@ -1,9 +1,9 @@
 export interface Hms_RequestClass
 {
 	/**
-	 * Creates a request from a URL.
+	 * Creates a request from a pathname.
 	 * 
-	 * @returns A request if `pathname` is a valid URL; `null` otherwise.
+	 * @returns A request if `pathname` is a valid pathname; `null` otherwise.
 	 */
 	create(pathname: string): Hms_RequestInstance | null;
 
