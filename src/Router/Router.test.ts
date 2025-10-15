@@ -73,7 +73,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -89,7 +89,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -119,7 +119,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 		
 		req = Hms_Request.create('/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -141,7 +141,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/route');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -163,7 +163,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/route/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -185,7 +185,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/route20');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -207,7 +207,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/route20/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -240,7 +240,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -261,7 +261,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -297,7 +297,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -323,7 +323,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -349,7 +349,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -375,7 +375,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/route20');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -401,7 +401,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/route20/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -445,7 +445,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -471,7 +471,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route2');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -508,7 +508,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route2/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -562,7 +562,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -608,7 +608,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -643,7 +643,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		
 
 		req = Hms_Request.create('/route3');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -680,7 +680,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route3/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -737,7 +737,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		// RUNS controllerLike_root
 
 		req = Hms_Request.create('/');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -765,7 +765,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		// RUNS controllerLike1
 
 		req = Hms_Request.create('/route1');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -802,7 +802,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route1/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -841,7 +841,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		// RUNS controllerLike2
 
 		req = Hms_Request.create('/route1/route2');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -878,7 +878,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route1/route2/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -917,7 +917,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 		// RUNS controllerLike3
 
 		req = Hms_Request.create('/route1/route2/route3');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -954,7 +954,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route1/route2/route3/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -1004,7 +1004,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route1');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{
@@ -1028,7 +1028,7 @@ describe("Hms_Router.prototype.run(req, res)", function ()
 
 
 		req = Hms_Request.create('/route1/some/random/pathname');
-		res = new Hms_Response();
+		res = Hms_Response.create();
 
 		if (req === null)
 		{

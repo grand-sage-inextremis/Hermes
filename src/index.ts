@@ -34,7 +34,7 @@ namespace Hermes
 	export const Router = Hms_Router;
 	
 	export const createRequest: typeof Hms_Request.create = Hms_Request.create;
-	export const createResponse = () => new Hms_Response();
+	export const createResponse: typeof Hms_Response.create = Hms_Response.create;
 	export const createRouter: typeof Hms_Router.create = Hms_Router.create;
 	export const createController: typeof Hms_Controller.create = Hms_Controller.create;
 }

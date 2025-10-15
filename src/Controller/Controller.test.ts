@@ -22,7 +22,7 @@ describe("Hms_Controller.prototype.run(req, res)", function ()
 		let controller = Hms_Controller.create(mockControllerFunction);
 
 		let req = Hms_Request.create('/planets/venus');
-		let res = new Hms_Response();
+		let res = Hms_Response.create();
 
 		if (req === null)
 		{

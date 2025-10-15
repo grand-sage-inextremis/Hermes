@@ -59,7 +59,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * 
 	 * ```
 	 * 	let req = Hms_Request.create('/route2/some/random/pathname');
-	 * 	let res = new Hms_Response();
+	 * 	let res = Hms_Response.create();
 	 * 
 	 * 	router.run(req, res);
 	 * 
@@ -72,7 +72,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * 
 	 * ```
 	 * 	let req = Hms_Request.create('/route66/some/random/pathname');
-	 * 	let res = new Hms_Response();
+	 * 	let res = Hms_Response.create();
 	 * 
 	 * 	router.run(req, res);
 	 * 
@@ -87,7 +87,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * 	// Let's assume that router.useDefault() has never been called.
 	 * 
 	 * 	let req = Hms_Request.create('/route66/some/random/pathname');
-	 * 	let res = new Hms_Response();
+	 * 	let res = Hms_Response.create();
 	 * 
 	 * 	router.run(req, res);
 	 * 
@@ -121,7 +121,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * 	router.useDefault(controllerLike_default);
 	 * 
 	 * 	let req = Hms_Request.create('/route/some/random/pathname');
-	 * 	let res = new Hms_Response();
+	 * 	let res = Hms_Response.create();
 	 * 
 	 * 	router.run(req, res);
 	 * 
@@ -144,7 +144,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * 	router.useDefault(controllerLike_default);
 	 * 
 	 * 	let req = Hms_Request.create('/route1/route2/route3/some/random/pathname');
-	 * 	let res = new Hms_Response();
+	 * 	let res = Hms_Response.create();
 	 * 
 	 * 	router.run(req, res);
 	 * 
@@ -173,7 +173,7 @@ export interface Hms_RouterInstance<Hms_GenericRequest extends Hms_Request = Hms
 	 * 	router.useDefault(controllerLike3);
 	 * 
 	 * 	let req = Hms_Request.create('/some/random/pathname');
-	 * 	let res = new Hms_Response();
+	 * 	let res = Hms_Response.create();
 	 * 
 	 * 	router.run(req, res);
 	 * 
