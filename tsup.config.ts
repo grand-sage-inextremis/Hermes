@@ -3,7 +3,7 @@ import { defineConfig, Options } from 'tsup';
 
 
 
-const ENV: string = process.env.ENV ?? 'production'
+const ENV: string = process.env.ENV ?? 'production';
 
 
 
