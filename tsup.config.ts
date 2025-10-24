@@ -7,10 +7,8 @@ const ENV: string = process.env.ENV ?? 'production'
 
 
 
-const TSUP_CONFIG: Options = {
-	entry: ['./src/index.ts'],
+const commonConfig: Options = {
 	outDir: './dist',
-	format: ['cjs', 'esm'],
 	target: "es2022",
 	dts: true,
 	splitting: false,
@@ -23,10 +21,22 @@ const TSUP_CONFIG: Options = {
 
 if (ENV === 'development')
 {
-	TSUP_CONFIG.minify = false;
-	TSUP_CONFIG.sourcemap = true;
+	commonConfig.minify = false;
+	commonConfig.sourcemap = true;
 }
 
 
 
-export default defineConfig(TSUP_CONFIG);
+export default defineConfig([
+	{
+		...commonConfig,
+		entry: ['./src/index.ts'],
+		format: ['cjs', 'esm']
+	},
+	{
+		...commonConfig,
+		entry: { 'index': './src/index.iife.ts' },
+		format: ['iife'],
+		globalName: 'Hermes'
+	}
+]);
